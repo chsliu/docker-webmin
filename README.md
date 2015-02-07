@@ -5,4 +5,5 @@ dockerfile for webmin
 ```
 git clone https://github.com/chsliu/docker-webmin.git
 cd docker-webmin
+docker build -t chsliu/webmin .
 ```
