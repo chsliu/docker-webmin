@@ -1,5 +1,5 @@
 FROM debian
-MAINTAINER Sita Liu <chsliu@gmail>
+MAINTAINER Sita Liu <chsliu+docker@gmail>
 
 
 ENV HOME /root
