@@ -1,13 +1,17 @@
-FROM debian
+FROM debian:jessie
 MAINTAINER Sita Liu <chsliu+docker@gmail>
+
+
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get -y install locales
 
 
 ENV HOME /root
 ENV LANG en_US.UTF-8
-#RUN locale-gen en_US.UTF-8
+RUN locale-gen en_US.UTF-8
+RUN dpkg-reconfigure locales
 
 
-RUN apt-get update && apt-get -y upgrade
 RUN apt-get -y install wget
 RUN echo "deb http://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list
 RUN echo "deb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib" >> /etc/apt/sources.list
@@ -23,3 +27,5 @@ EXPOSE 10000
 VOLUME ["/etc/webmin"]
 
 CMD ["/sbin/init"]
+
+RUN locale 
