@@ -8,7 +8,7 @@ cd docker-webmin
 docker build -t chsliu/webmin .
 ```
 
-## Create the image
+## Running the image
 ```
 docker run -d -p 10000:10000 chsliu/webmin
 ```
