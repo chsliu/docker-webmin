@@ -1,14 +1,20 @@
 # docker-webmin
 dockerfile for webmin
 
-## Create the image
+## Building the image
 ```
 git clone https://github.com/chsliu/docker-webmin.git
 cd docker-webmin
 docker build -t chsliu/webmin .
 ```
 
-## Running the image
+## Running the container
 ```
 docker run -d -p 10000:10000 chsliu/webmin
+```
+
+Log into webmin and manage your server
+```
+http://hostname.or.ip:10000
+(root:pass)
 ```
