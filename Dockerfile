@@ -2,30 +2,28 @@ FROM debian:jessie
 MAINTAINER Sita Liu <chsliu+docker@gmail>
 
 
-RUN apt-get update && apt-get -y upgrade
-RUN apt-get -y install locales
+RUN echo root:pass | chpasswd && \
+	echo "Acquire::GzipIndexes \"false\"; Acquire::CompressionTypes::Order:: \"gz\";" >/etc/apt/apt.conf.d/docker-gzip-indexes && \
+	apt-get update && \
+	apt-get install -y \
+	wget \
+	locales && \
+	dpkg-reconfigure locales && \
+	locale-gen C.UTF-8 && \
+	/usr/sbin/update-locale LANG=C.UTF-8 && \
+	wget http://www.webmin.com/jcameron-key.asc && \
+	apt-key add jcameron-key.asc && \
+	echo "deb http://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list && \
+	echo "deb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib" >> /etc/apt/sources.list && \
+	apt-get update && \
+	apt-get install -y webmin && \
+	apt-get clean
 
 
-ENV HOME /root
-ENV LANG en_US.UTF-8
-RUN locale-gen en_US.UTF-8
-RUN dpkg-reconfigure locales
-
-
-RUN apt-get -y install wget
-RUN echo "deb http://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list
-RUN echo "deb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib" >> /etc/apt/sources.list
-RUN echo "Acquire::GzipIndexes \"false\"; Acquire::CompressionTypes::Order:: \"gz\";" > /etc/apt/apt.conf.d/docker-gzip-indexes
-RUN wget http://www.webmin.com/jcameron-key.asc && apt-key add jcameron-key.asc
-RUN apt-get update
-RUN apt-get -y install webmin && apt-get clean
-
-RUN echo root:pass | chpasswd
+ENV LC_ALL C.UTF-8
 
 EXPOSE 10000
 
 VOLUME ["/etc/webmin"]
 
 CMD ["/sbin/init"]
-
-RUN locale 
